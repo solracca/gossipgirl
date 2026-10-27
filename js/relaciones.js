@@ -132,17 +132,27 @@ if(current<quiz.length){
 cargarPregunta();
 
 }else{
+    progress.textContent = "RESULTADO";
+    question.textContent = `Obtuviste ${score} de ${quiz.length}`;
+    answers.innerHTML = "";
+    result.textContent = "¡Sos oficialmente parte del Upper East Side!";
+    result.style.color = "#c9a45c";
+    next.style.display = "none";
 
-progress.textContent="RESULTADO";
-question.textContent=`Obtuviste ${score} de ${quiz.length}`;
-
-answers.innerHTML="";
-
-result.innerHTML="¡Sos oficialmente parte del Upper East Side! 💋";
-result.style.color="#c9a45c";
-
-next.style.display="none";
-
+    fetch("guardar_puntos.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "puntos=" + score
+    })
+    .then(res => res.text())
+    .then(data => {
+        if (data.trim() !== "ok") {
+            result.textContent += " No se pudieron guardar tus puntos.";
+        }
+    })
+    .catch(() => {
+        result.textContent += " No se pudieron guardar tus puntos.";
+    });
 }
 
 };

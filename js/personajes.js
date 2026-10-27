@@ -1,5 +1,5 @@
 const outfits = Array.from({ length: 16 }, (_, i) => ({
-    img: `img/outfit${i + 1}.jpg`
+    img: `../img/outfit${i + 1}.jpg`
 }));
 
 let current = 0;
